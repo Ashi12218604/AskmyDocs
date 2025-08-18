@@ -4,10 +4,8 @@ AskMyDocs is a Document Question-Answering application powered by LangChain, FAI
 
 ---
 
-## 🚀 Demo
-👉 [Live Demo](#) (replace with your Streamlit Cloud link)
-
-*(Replace with your own screenshot or GIF)*
+## 🚀Live Demo
+👉 echo.streamlit.app
 
 ---
 
@@ -89,16 +87,3 @@ Contributions are welcome!
 5. Open a Pull Request
 
 ---
-
-## 📜 License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
-
-```
-
-👉 Every major section (**Demo, Getting Started, Tech Stack, Contribution, License**) now has that **clean line separator** exactly like in your screenshot.  
-
-Do you want me to also **add badges** (e.g. Python version, Streamlit, License) at the top for a more professional GitHub look?
-```
