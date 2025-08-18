@@ -5,7 +5,7 @@ AskMyDocs is a Document Question-Answering application powered by LangChain, FAI
 ---
 
 ## 🚀Live Demo
-👉 echo.streamlit.app
+👉 [echo.streamlit.app](https://echo.streamlit.app)
 
 ---
 
