@@ -1,0 +1,8 @@
+# Environment and secrets
+.env
+.streamlit/
+venv/
+
+# IDE and generated files
+.idea/
+faiss_store.pkl
