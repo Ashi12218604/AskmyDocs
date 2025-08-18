@@ -1,74 +1,102 @@
-📄 AskMyDocs 📝
-<p align="center"> <img src="https://i.imgur.com/your-app-banner.png" alt="AskMyDocs Banner" width="800"/> </p> <p align="center"> <a href="https://echodocs.streamlit.app/"><img src="https://img.shields.io/badge/🚀 Live Demo-Click%20Here-brightgreen?style=for-the-badge" /></a> <a href="https://github.com/Ashi12218604/AskMyDocs/stargazers"><img src="https://img.shields.io/github/stars/Ashi12218604/AskMyDocs?style=for-the-badge" /></a> <a href="https://github.com/Ashi12218604/AskMyDocs/issues"><img src="https://img.shields.io/github/issues/Ashi12218604/AskMyDocs?style=for-the-badge&color=yellow" /></a> </p>
-🎯 Project Purpose
+# 🔍 AskMyDocs – AI-Powered Document Q&A  
 
-An intelligent, conversational document analysis tool built for the Haqdarshak Scheme Research Application assignment.
+AskMyDocs is an **AI-driven document assistant** that allows you to upload PDFs, ask natural language questions, and receive context-aware answers.  
+Built with **LangChain, FAISS, Hugging Face embeddings, and Streamlit**, it’s your personal knowledge retriever.  
 
-✅ Helps streamline research on government schemes
-✅ Uses AI/ML to make complex info queryable
-✅ Works with PDFs + URLs
+---
 
-✨ Features
+## 🌟 Features  
 
-📂 Multi-Source Input → Upload PDFs or paste URLs
+- 📄 **Upload & Parse PDFs** (via PyMuPDF)  
+- 🤖 **Ask Questions in Natural Language**  
+- ⚡ **Fast Vector Search with FAISS**  
+- 🧠 **Contextual Answers using Hugging Face models**  
+- 🌍 **Streamlit Web App Interface**  
+- 🔑 **GROQ API Integration**  
 
-💬 Conversational Q&A → Ask in natural language
+---
 
-🔍 Source Verification → Snippets included with answers
+## 🖥️ Demo  
 
-🎨 Dynamic Theming → Light & Dark mode toggle
+👉 **[Live Demo](https://your-streamlit-link.com)** (replace with your Streamlit Cloud link)  
 
-💾 Session Management → Save/reset chat history
+![Demo Screenshot](demo.gif)  
+*(Replace with your own screenshot or GIF)*  
 
-<details> <summary>🛠️ Tech Stack (click to expand)</summary>
+---
 
-Framework: Streamlit
+## 🚀 Getting Started  
 
-LLM: Groq (LLaMA 3 – 8B)
-
-Core Library: LangChain
-
-Embeddings: Hugging Face Sentence Transformers
-
-Vector Store: FAISS
-
-File Processing: PyMuPDF, Unstructured
-
-</details>
-⚙️ Run Locally
-# 1. Clone the repo
+### 1️⃣ Clone the repository  
+```bash
 git clone https://github.com/Ashi12218604/AskmyDocs.git
 cd AskmyDocs
 
-# 2. Create virtual environment
+**### 2️⃣ Create and activate a virtual environment**
+# Linux / Mac
 python -m venv venv
-source venv/bin/activate    # Windows: venv\Scripts\activate
+source venv/bin/activate  
 
-# 3. Install dependencies
+# Windows
+venv\Scripts\activate
+
+**### 3️⃣ Install dependencies**
 pip install -r requirements.txt
+**
+###4️⃣ Set up environment variables
+**
+Create a .env file in the project root and add your API key:
 
-# 4. Add your API key in .env
-echo GROQ_API_KEY="your_api_key_here" > .env
+GROQ_API_KEY="your_api_key_here"
 
-# 5. Run the app
-streamlit run main.py
+**### 5️⃣ Run the app**
+streamlit run app.py
 
-🚀 Roadmap
+⚙️ Tech Stack
 
- Export chat history to PDF/CSV
+Python 3.9+
 
- Advanced metadata filtering
+Streamlit – Interactive UI
 
- Support .docx & .txt
+LangChain – LLM Orchestration
 
-📸 Demo
-<p align="center"> <img src="https://i.imgur.com/your-demo-gif.gif" alt="AskMyDocs Demo" width="800"/> </p>
-🙏 Acknowledgements
+FAISS – Vector Search
 
-Groq – fast LLM inference
+Hugging Face Transformers – Embeddings / Models
 
-Hugging Face – embeddings/models
+PyMuPDF – PDF Parsing
 
-LangChain – orchestration
+dotenv – Environment Management
 
-Streamlit – UI framework
+📂 Project Structure
+AskmyDocs/
+│── app.py               # Streamlit main app
+│── requirements.txt     # Dependencies
+│── .env                 # API keys (not committed)
+│── README.md            # Project documentation
+│── /data                # Uploaded documents
+│── /vectorstore         # FAISS index storage
+
+🤝 Contributing
+
+Contributions are welcome! 🎉
+
+Fork the repo
+
+Create your feature branch (git checkout -b feature-name)
+
+Commit changes (git commit -m 'Added feature XYZ')
+
+Push to branch (git push origin feature-name)
+
+Open a Pull Request
+
+📜 License
+
+This project is licensed under the MIT License – see the LICENSE file for details.
+
+⭐ Support
+
+If you like this project, give it a ⭐ on GitHub!
+It helps more people discover AskMyDocs 🚀
+
