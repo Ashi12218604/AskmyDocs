@@ -9,11 +9,11 @@ AskMyDocs is an intelligent, conversational document analysis tool that allows y
 
 ---
 ## ✨ Key Features
-Multi-Source Input: Upload multiple PDF files or provide a list of website URLs for analysis.
-Conversational Q&A: Ask questions in natural language and get accurate answers based on the document content.
-Source Verification: Each answer is accompanied by snippets from the original documents, allowing for easy verification.
-Dynamic Theming: Switch between a clean light mode and a professional dark mode. 
-Session Management: Your chat history is saved for your session, and you can easily reset the index to start fresh.
+**Multi-Source Input**: Upload multiple PDF files or provide a list of website URLs for analysis.  
+**Conversational Q&A**: Ask questions in natural language and get accurate answers based on the document content.  
+**Source Verification**: Each answer is accompanied by snippets from the original documents, allowing for easy verification.  
+**Dynamic Theming**: Switch between a clean light mode and a professional dark mode.  
+**Session Management**: Your chat history is saved for your session, and you can easily reset the index to start fresh.  
 
 ---
 ## 🛠 Getting Started
