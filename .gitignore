@@ -1,0 +1,22 @@
+# --- Secrets (IMPORTANT) ---
+# Ignore files containing API keys and other secrets.
+.env
+.streamlit/
+
+# --- Virtual Environment ---
+# Ignore the Python virtual environment folder.
+venv/
+
+# --- Generated Files ---
+# Ignore the FAISS index file and logs, as they are created when the app runs.
+faiss_index.pkl
+logs/
+
+# --- Python Cache ---
+# Ignore Python's cached files.
+__pycache__/
+*.pyc
+
+# --- IDE / Editor Settings ---
+# Ignore the folder created by the PyCharm IDE.
+.idea/
