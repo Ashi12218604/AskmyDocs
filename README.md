@@ -51,6 +51,7 @@ GROQ_API_KEY="your_api_key_here"
 
 **### 5️⃣ Run the app**
 streamlit run app.py
+---
 
 ⚙️ Tech Stack
 
@@ -67,6 +68,7 @@ Hugging Face Transformers – Embeddings / Models
 PyMuPDF – PDF Parsing
 
 dotenv – Environment Management
+---
 
 📂 Project Structure
 AskmyDocs/
@@ -76,6 +78,7 @@ AskmyDocs/
 │── README.md            # Project documentation
 │── /data                # Uploaded documents
 │── /vectorstore         # FAISS index storage
+---
 
 🤝 Contributing
 
@@ -90,6 +93,7 @@ Commit changes (git commit -m 'Added feature XYZ')
 Push to branch (git push origin feature-name)
 
 Open a Pull Request
+---
 
 📜 License
 
