@@ -1,29 +1,26 @@
-📄 AskMyDocs
-<p align="center"> <img src="https://i.imgur.com/your-app-gif-url.gif" alt="AskMyDocs Demo GIF" width="800"/> </p>
-
-AskMyDocs is an intelligent, conversational document analysis tool that allows you to chat with your documents. Upload PDFs or provide website URLs, and get instant answers, summaries, and insights from your content.
-
-🔗 Live Demo Here
-
+📄 AskMyDocs 📝
+<p align="center"> <img src="https://i.imgur.com/your-app-banner.png" alt="AskMyDocs Banner" width="800"/> </p> <p align="center"> <a href="https://echodocs.streamlit.app/"><img src="https://img.shields.io/badge/🚀 Live Demo-Click%20Here-brightgreen?style=for-the-badge" /></a> <a href="https://github.com/Ashi12218604/AskMyDocs/stargazers"><img src="https://img.shields.io/github/stars/Ashi12218604/AskMyDocs?style=for-the-badge" /></a> <a href="https://github.com/Ashi12218604/AskMyDocs/issues"><img src="https://img.shields.io/github/issues/Ashi12218604/AskMyDocs?style=for-the-badge&color=yellow" /></a> </p>
 🎯 Project Purpose
 
-This application was developed as a submission for the Haqdarshak Scheme Research Application assignment.
+An intelligent, conversational document analysis tool built for the Haqdarshak Scheme Research Application assignment.
 
-The goal was to build an automated tool to streamline the process of researching and understanding government schemes from various online sources. It leverages AI + ML technologies to make complex information more accessible and queryable.
+✅ Helps streamline research on government schemes
+✅ Uses AI/ML to make complex info queryable
+✅ Works with PDFs + URLs
 
-✨ Key Features
+✨ Features
 
-📂 Multi-Source Input – Upload multiple PDF files or provide URLs for analysis.
+📂 Multi-Source Input → Upload PDFs or paste URLs
 
-💬 Conversational Q&A – Ask natural language questions and get context-based answers.
+💬 Conversational Q&A → Ask in natural language
 
-🔍 Source Verification – Each answer includes snippets from original documents.
+🔍 Source Verification → Snippets included with answers
 
-🎨 Dynamic Theming – Toggle between Light and Dark modes.
+🎨 Dynamic Theming → Light & Dark mode toggle
 
-💾 Session Management – Your chat history is preserved during the session.
+💾 Session Management → Save/reset chat history
 
-🛠️ Tech Stack
+<details> <summary>🛠️ Tech Stack (click to expand)</summary>
 
 Framework: Streamlit
 
@@ -31,58 +28,47 @@ LLM: Groq (LLaMA 3 – 8B)
 
 Core Library: LangChain
 
-Embeddings: Hugging Face (Sentence Transformers)
+Embeddings: Hugging Face Sentence Transformers
 
-Vector Store: FAISS (Facebook AI Similarity Search)
+Vector Store: FAISS
 
-File Processing: PyMuPDF (PDFs), Unstructured (URLs)
+File Processing: PyMuPDF, Unstructured
 
-⚙️ How to Run Locally
-
-Clone the Repository
-
+</details>
+⚙️ Run Locally
+# 1. Clone the repo
 git clone https://github.com/Ashi12218604/AskmyDocs.git
 cd AskmyDocs
 
-
-Create a Virtual Environment
-
+# 2. Create virtual environment
 python -m venv venv
-source venv/bin/activate     # On Windows: venv\Scripts\activate
+source venv/bin/activate    # Windows: venv\Scripts\activate
 
-
-Install Dependencies
-
+# 3. Install dependencies
 pip install -r requirements.txt
 
+# 4. Add your API key in .env
+echo GROQ_API_KEY="your_api_key_here" > .env
 
-Set Up API Key
-Create a .env file in the project root and add your Groq API key:
-
-GROQ_API_KEY="gsk_YourGroqApiKeyGoesHere"
-
-
-Run the Application
-
+# 5. Run the app
 streamlit run main.py
 
+🚀 Roadmap
 
-App will open at: http://localhost:8501
+ Export chat history to PDF/CSV
 
-🚀 Future Work
+ Advanced metadata filtering
 
-📑 Export chat history to PDF/CSV
+ Support .docx & .txt
 
-📌 Advanced metadata filtering (filter Q&A by source doc)
-
-📂 Support for more file types (.docx, .txt)
-
+📸 Demo
+<p align="center"> <img src="https://i.imgur.com/your-demo-gif.gif" alt="AskMyDocs Demo" width="800"/> </p>
 🙏 Acknowledgements
 
-Groq for blazing-fast LLM inference
+Groq – fast LLM inference
 
-Hugging Face for embeddings & models
+Hugging Face – embeddings/models
 
-LangChain for orchestration
+LangChain – orchestration
 
-Streamlit for an interactive front-end
+Streamlit – UI framework
