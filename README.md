@@ -1,106 +1,104 @@
-# 🔍 AskMyDocs – AI-Powered Document Q&A  
+# 📘 AskMyDocs
 
-AskMyDocs is an **AI-driven document assistant** that allows you to upload PDFs, ask natural language questions, and receive context-aware answers.  
-Built with **LangChain, FAISS, Hugging Face embeddings, and Streamlit**, it’s your personal knowledge retriever.  
-
----
-
-## 🌟 Features  
-
-- 📄 **Upload & Parse PDFs** (via PyMuPDF)  
-- 🤖 **Ask Questions in Natural Language**  
-- ⚡ **Fast Vector Search with FAISS**  
-- 🧠 **Contextual Answers using Hugging Face models**  
-- 🌍 **Streamlit Web App Interface**  
-- 🔑 **GROQ API Integration**  
+AskMyDocs is a Document Question-Answering application powered by LangChain, FAISS, Hugging Face embeddings, and Groq LLMs. It allows users to upload PDFs and interactively query them using a conversational interface.
 
 ---
 
-## 🖥️ Demo  
+## 🚀 Demo
+👉 [Live Demo](#) (replace with your Streamlit Cloud link)
 
-👉 **[Live Demo](https://your-streamlit-link.com)** (replace with your Streamlit Cloud link)  
-
-![Demo Screenshot](demo.gif)  
-*(Replace with your own screenshot or GIF)*  
+*(Replace with your own screenshot or GIF)*
 
 ---
 
-## 🚀 Getting Started  
+## 🛠 Getting Started
 
-### 1️⃣ Clone the repository  
+### 1️⃣ Clone the repository
 ```bash
-git clone https://github.com/Ashi12218604/AskmyDocs.git
+git clone https://github.com/Ashi12218684/AskmyDocs.git
 cd AskmyDocs
+````
 
-**### 2️⃣ Create and activate a virtual environment**
+### 2️⃣ Create and activate a virtual environment
+
+```bash
 # Linux / Mac
 python -m venv venv
-source venv/bin/activate  
+source venv/bin/activate
 
 # Windows
 venv\Scripts\activate
+```
 
-**### 3️⃣ Install dependencies**
+### 3️⃣ Install dependencies
+
+```bash
 pip install -r requirements.txt
-**
-###4️⃣ Set up environment variables
-**
-Create a .env file in the project root and add your API key:
+```
 
+### 4️⃣ Set up environment variables
+
+Create a `.env` file in the project root and add your API key:
+
+```
 GROQ_API_KEY="your_api_key_here"
+```
 
-**### 5️⃣ Run the app**
+### 5️⃣ Run the app
+
+```bash
 streamlit run app.py
+```
+
 ---
 
-⚙️ Tech Stack
+## ⚙ Tech Stack
 
-Python 3.9+
+* Python 3.9+
+* Streamlit – Interactive UI
+* LangChain – LLM Orchestration
+* FAISS – Vector Search
+* Hugging Face Transformers – Embeddings / Models
+* PyMuPDF – PDF Parsing
+* python-dotenv – Environment Management
 
-Streamlit – Interactive UI
-
-LangChain – LLM Orchestration
-
-FAISS – Vector Search
-
-Hugging Face Transformers – Embeddings / Models
-
-PyMuPDF – PDF Parsing
-
-dotenv – Environment Management
 ---
 
-📂 Project Structure
+## 📂 Project Structure
+
+```
 AskmyDocs/
 │── app.py               # Streamlit main app
-│── requirements.txt     # Dependencies
-│── .env                 # API keys (not committed)
-│── README.md            # Project documentation
-│── /data                # Uploaded documents
-│── /vectorstore         # FAISS index storage
+│── requirements.txt     # Python dependencies
+│── .env.example         # Example environment variables
+│── utils/               # Helper functions
+│── data/                # Uploaded PDFs
+│── vectorstore/         # FAISS index storage
+```
+
 ---
 
-🤝 Contributing
+## 🤝 Contribution
 
-Contributions are welcome! 🎉
+Contributions are welcome!
 
-Fork the repo
+1. Fork the repository
+2. Create a new branch (`feature-branch`)
+3. Commit changes
+4. Push to your branch
+5. Open a Pull Request
 
-Create your feature branch (git checkout -b feature-name)
-
-Commit changes (git commit -m 'Added feature XYZ')
-
-Push to branch (git push origin feature-name)
-
-Open a Pull Request
 ---
 
-📜 License
+## 📜 License
 
-This project is licensed under the MIT License – see the LICENSE file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-⭐ Support
+---
 
-If you like this project, give it a ⭐ on GitHub!
-It helps more people discover AskMyDocs 🚀
+```
 
+👉 Every major section (**Demo, Getting Started, Tech Stack, Contribution, License**) now has that **clean line separator** exactly like in your screenshot.  
+
+Do you want me to also **add badges** (e.g. Python version, Streamlit, License) at the top for a more professional GitHub look?
+```
