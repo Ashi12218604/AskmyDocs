@@ -1,7 +1,5 @@
 import os
-import shutil
 import logging
-import tempfile
 import streamlit as st
 import fitz  # PyMuPDF
 from dotenv import load_dotenv
@@ -15,7 +13,7 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain_groq import ChatGroq
 
 # =========================
-# Page Config (must be the first Streamlit command)
+# Page Config
 # =========================
 st.set_page_config(page_title="AskMyDocs", layout="wide", initial_sidebar_state="expanded")
 
@@ -26,51 +24,25 @@ st.set_page_config(page_title="AskMyDocs", layout="wide", initial_sidebar_state=
 def apply_dark_mode_styles():
     st.markdown("""
     <style>
-        /* Base app background */
-        .stApp {
-            background-color: #111111;
-        }
-        /* Remove the white bar at the top */
-        header {
-            background-color: transparent !important;
-        }
-        /* Main content area */
-        [data-testid="stAppViewContainer"] > .main {
-            background-color: #1E1E1E;
-        }
-        /* Sidebar */
-        [data-testid="stSidebar"] {
-            background-color: #191919;
-        }
-        /* All Headers (h1, h2, h3) are now white */
-        h1, h2, h3, h4 {
-            color: #FFFFFF !important;
-        }
-        /* Generated text color */
-        [data-testid="stChatMessage"] p {
-            color: #00D1C1 !important; /* Vibrant Peacock Green/Teal */
-        }
-        /* Buttons */
+        .stApp { background-color: #111111; }
+        header { background-color: transparent !important; }
+        [data-testid="stAppViewContainer"] > .main { background-color: #1E1E1E; }
+        [data-testid="stSidebar"] { background-color: #191919; }
+        [data-testid="stHeading"] h1 { color: #FFFFFF !important; }
+        [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3, h2, h3, h4 { color: #FFFFFF !important; }
         .stButton > button {
-            background-color: #D32F2F; /* Red background */
-            color: #FFFFFF; /* White text */
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 24px;
+            background-color: #D32F2F; color: #FFFFFF; font-weight: bold;
+            border: none; border-radius: 8px; padding: 10px 24px;
         }
-        .stButton > button:hover {
-            background-color: #B71C1C; /* Darker red on hover */
-        }
-        /* Chat Input Box */
-        [data-testid="stChatInput"] {
-            background-color: #191919;
-        }
+        .stButton > button:hover { background-color: #B71C1C; }
+        [data-testid="stChatInput"] { background-color: #191919; }
     </style>
     """, unsafe_allow_html=True)
 
 
-# Sidebar: Dark mode toggle
+# =========================
+# Sidebar & State
+# =========================
 st.sidebar.header("Settings")
 dark_mode = st.sidebar.toggle("Enable Dark Mode", value=False)
 if dark_mode:
@@ -78,9 +50,7 @@ if dark_mode:
 
 st.title("AskMyDocs 📝")
 
-# =========================
-# Secrets / Environment
-# =========================
+# Load API key
 if "GROQ_API_KEY" in st.secrets:
     GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 else:
@@ -88,33 +58,22 @@ else:
     GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 if not GROQ_API_KEY:
-    st.error("Missing GROQ_API_KEY. Add it in Streamlit Secrets (Cloud) or in a local .env file.")
+    st.error("Missing GROQ_API_KEY. Add it in Streamlit Secrets or a local .env file.")
     st.stop()
 
-# =========================
-# Session State
-# =========================
 if "messages" not in st.session_state:
     st.session_state.messages = []
-# --- FIX: Store the FAISS index in session state instead of a file ---
 if "faiss_index" not in st.session_state:
     st.session_state.faiss_index = None
 
 
-# =========================
-# Cached resources
-# =========================
 @st.cache_resource(show_spinner=False)
 def get_embedder():
     return HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
 
-# =========================
-# Sidebar Controls
-# =========================
 if st.sidebar.button("Reset History"):
     st.session_state.messages = []
-    # --- FIX: Clear the index from session state ---
     st.session_state.faiss_index = None
     st.success("History and document index cleared.")
     st.rerun()
@@ -128,9 +87,6 @@ urls = [u.strip() for u in raw_urls.splitlines() if u.strip()]
 # Process Data
 # =========================
 if st.sidebar.button("Process Data"):
-    # --- FIX: Clear old index from session state ---
-    st.session_state.faiss_index = None
-
     docs = []
     if uploaded_pdfs:
         for pdf in uploaded_pdfs:
@@ -156,13 +112,11 @@ if st.sidebar.button("Process Data"):
             chunks = splitter.split_documents(docs)
 
             if not chunks:
-                st.error("Could not extract any text from the provided documents. Please check the files/URLs.")
-                st.stop()
-
-            embedder = get_embedder()
-            # --- FIX: Save the index directly to session state ---
-            st.session_state.faiss_index = FAISS.from_documents(chunks, embedding=embedder)
-            st.success("Documents processed successfully!")
+                st.error("Could not extract any text chunks from the documents.")
+            else:
+                embedder = get_embedder()
+                st.session_state.faiss_index = FAISS.from_documents(chunks, embedding=embedder)
+                st.success("Documents processed successfully!")
 
 # =========================
 # Conversation History (UI)
@@ -170,6 +124,10 @@ if st.sidebar.button("Process Data"):
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
+        if "sources" in message:
+            with st.expander("Show Source Snippets"):
+                for source in message["sources"]:
+                    st.info(source)
 
 # =========================
 # Chat Input / Q&A
@@ -180,7 +138,6 @@ if prompt:
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    # --- FIX: Check for the index in session state ---
     if st.session_state.faiss_index is None:
         st.warning("Please process your documents first using the sidebar.")
         st.stop()
@@ -188,18 +145,27 @@ if prompt:
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
             faiss_index = st.session_state.faiss_index
-            llm = ChatGroq(api_key=GROQ_API_KEY, model_name="llama3-8b-8192")
-            top_docs = faiss_index.similarity_search(prompt, k=3)
+
+            # ✅ FIXED: Use supported model
+            llm = ChatGroq(api_key=GROQ_API_KEY, model_name="gemma2-9b-it")
+
+            top_docs = faiss_index.similarity_search(prompt, k=2)
+
             chain = load_qa_chain(llm=llm, chain_type="stuff")
             answer = chain.run(input_documents=top_docs, question=prompt)
+
             st.markdown(answer)
 
+            sources_for_display = []
+            for i, doc in enumerate(top_docs):
+                source = doc.metadata.get("source", "Unknown Source")
+                content = (doc.page_content or "").replace("$", "\\$")
+                source_info = f"**Snippet {i + 1} from `{source}`:**\n\n{content[:400]}..."
+                sources_for_display.append(source_info)
+
             with st.expander("Show Source Snippets"):
-                for i, doc in enumerate(top_docs):
-                    source = doc.metadata.get("source", "Unknown Source")
-                    content = (doc.page_content or "").replace("$", "\\$")
-                    st.markdown(f"**Snippet {i + 1} from `{source}`:**")
-                    st.info(f"{content[:400]}...")
+                for source_item in sources_for_display:
+                    st.info(source_item)
 
-            st.session_state.messages.append({"role": "assistant", "content": answer})
-
+            assistant_message = {"role": "assistant", "content": answer, "sources": sources_for_display}
+            st.session_state.messages.append(assistant_message)
