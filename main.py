@@ -189,7 +189,7 @@ if prompt:
         with st.spinner("Thinking..."):
             faiss_index = st.session_state.faiss_index
             llm = ChatGroq(api_key=GROQ_API_KEY, model_name="llama3-8b-8192")
-            top_docs = faiss_index.similarity_search(prompt, k=4)
+            top_docs = faiss_index.similarity_search(prompt, k=3)
             chain = load_qa_chain(llm=llm, chain_type="stuff")
             answer = chain.run(input_documents=top_docs, question=prompt)
             st.markdown(answer)
@@ -202,3 +202,4 @@ if prompt:
                     st.info(f"{content[:400]}...")
 
             st.session_state.messages.append({"role": "assistant", "content": answer})
+
