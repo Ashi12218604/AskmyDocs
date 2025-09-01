@@ -146,7 +146,7 @@ if prompt:
         with st.spinner("Thinking..."):
             faiss_index = st.session_state.faiss_index
 
-            # ✅ FIXED: Use supported model
+            #  Use supported model
             llm = ChatGroq(api_key=GROQ_API_KEY, model_name="gemma2-9b-it")
 
             top_docs = faiss_index.similarity_search(prompt, k=2)
@@ -169,3 +169,4 @@ if prompt:
 
             assistant_message = {"role": "assistant", "content": answer, "sources": sources_for_display}
             st.session_state.messages.append(assistant_message)
+
