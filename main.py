@@ -3,8 +3,6 @@ import logging
 import streamlit as st
 import fitz  # PyMuPDF
 from dotenv import load_dotenv
-
-# CORRECTED: UnstructuredURLLoader is in langchain_community
 from langchain_community.document_loaders import UnstructuredURLLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
@@ -180,3 +178,4 @@ if prompt:
 
             assistant_message = {"role": "assistant", "content": answer, "sources": sources_for_display}
             st.session_state.messages.append(assistant_message)
+
