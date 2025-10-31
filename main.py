@@ -4,7 +4,8 @@ import streamlit as st
 import fitz  # PyMuPDF
 from dotenv import load_dotenv
 
-from langchain.document_loaders import UnstructuredURLLoader
+# CORRECTED: UnstructuredURLLoader is in langchain_community
+from langchain_community.document_loaders import UnstructuredURLLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
@@ -51,9 +52,11 @@ if dark_mode:
 st.title("AskMyDocs 📝")
 
 # Load API key
+# Use st.secrets for deployment
 if "GROQ_API_KEY" in st.secrets:
     GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 else:
+    # Fallback to .env for local development
     load_dotenv()
     GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
@@ -69,6 +72,7 @@ if "faiss_index" not in st.session_state:
 
 @st.cache_resource(show_spinner=False)
 def get_embedder():
+    # Use a well-regarded, lightweight embedding model
     return HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
 
@@ -91,6 +95,7 @@ if st.sidebar.button("Process Data"):
     if uploaded_pdfs:
         for pdf in uploaded_pdfs:
             try:
+                # Read PDF content using PyMuPDF
                 with fitz.open(stream=pdf.read(), filetype="pdf") as doc_pdf:
                     text = " ".join([page.get_text() for page in doc_pdf])
                     if text.strip():
@@ -99,6 +104,7 @@ if st.sidebar.button("Process Data"):
                 st.error(f"Error reading PDF {getattr(pdf, 'name', 'uploaded file')}: {e}")
     if urls:
         try:
+            # Load URLs
             url_docs = UnstructuredURLLoader(urls=urls).load()
             docs.extend(url_docs)
         except Exception as e:
@@ -107,13 +113,15 @@ if st.sidebar.button("Process Data"):
     if not docs:
         st.error("No valid content found to process.")
     else:
-        with st.spinner("Processing documents..."):
+        with st.spinner("Processing documents... (this may take a moment)"):
+            # Split documents into chunks
             splitter = RecursiveCharacterTextSplitter(chunk_size=1500, chunk_overlap=200)
             chunks = splitter.split_documents(docs)
 
             if not chunks:
                 st.error("Could not extract any text chunks from the documents.")
             else:
+                # Create embeddings and FAISS index
                 embedder = get_embedder()
                 st.session_state.faiss_index = FAISS.from_documents(chunks, embedding=embedder)
                 st.success("Documents processed successfully!")
@@ -146,19 +154,22 @@ if prompt:
         with st.spinner("Thinking..."):
             faiss_index = st.session_state.faiss_index
 
-            #  Use supported model
+            # Use a fast and capable model from Groq
             llm = ChatGroq(api_key=GROQ_API_KEY, model_name="gemma2-9b-it")
 
-            top_docs = faiss_index.similarity_search(prompt, k=2)
+            # Search for relevant documents
+            top_docs = faiss_index.similarity_search(prompt, k=4) # Increased k for better context
 
             chain = load_qa_chain(llm=llm, chain_type="stuff")
             answer = chain.run(input_documents=top_docs, question=prompt)
 
             st.markdown(answer)
 
+            # Format sources for display
             sources_for_display = []
             for i, doc in enumerate(top_docs):
                 source = doc.metadata.get("source", "Unknown Source")
+                # Clean content for display
                 content = (doc.page_content or "").replace("$", "\\$")
                 source_info = f"**Snippet {i + 1} from `{source}`:**\n\n{content[:400]}..."
                 sources_for_display.append(source_info)
@@ -169,4 +180,3 @@ if prompt:
 
             assistant_message = {"role": "assistant", "content": answer, "sources": sources_for_display}
             st.session_state.messages.append(assistant_message)
-
