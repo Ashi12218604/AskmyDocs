@@ -3,6 +3,7 @@ import logging
 import streamlit as st
 import fitz  # PyMuPDF
 from dotenv import load_dotenv
+import time  
 from langchain_community.document_loaders import UnstructuredURLLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
@@ -21,6 +22,7 @@ st.set_page_config(page_title="AskMyDocs", layout="wide", initial_sidebar_state=
 # Custom CSS for Dark Mode
 # =========================
 def apply_dark_mode_styles():
+    # Fixed indentation for the markdown block
     st.markdown("""
     <style>
         .stApp { background-color: #111111; }
@@ -153,15 +155,29 @@ if prompt:
             faiss_index = st.session_state.faiss_index
 
             # Use a fast and capable model from Groq
-            llm = ChatGroq(api_key=GROQ_API_KEY, model_name="gemma2-9b-it")
+            # gemma2-9b-it was decommissioned, using recommended replacement
+            llm = ChatGroq(api_key=GROQ_API_KEY, model_name="llama-3.1-8b-instant")
+            # --- END OF UPDATE ---
+
+            # --- START TIMER ---
+            start_time = time.perf_counter()
 
             # Search for relevant documents
-            top_docs = faiss_index.similarity_search(prompt, k=4) # Increased k for better context
+            top_docs = faiss_index.similarity_search(prompt, k=4)  # Increased k for better context
 
             chain = load_qa_chain(llm=llm, chain_type="stuff")
             answer = chain.run(input_documents=top_docs, question=prompt)
 
+            # --- END TIMER ---
+            end_time = time.perf_counter()
+            duration = end_time - start_time
+            # --- END TIMER ---
+
             st.markdown(answer)
+
+            # --- DISPLAY TIME TAKEN ---
+            st.caption(f"Time taken to answer: {duration:.2f} seconds")
+            # --- END DISPLAY ---
 
             # Format sources for display
             sources_for_display = []
