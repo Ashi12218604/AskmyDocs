@@ -3,9 +3,9 @@ import logging
 import streamlit as st
 import fitz  # PyMuPDF
 from dotenv import load_dotenv
-import time  
+import time
 from langchain_community.document_loaders import UnstructuredURLLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_textsplitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.schema import Document
@@ -154,6 +154,7 @@ if prompt:
         with st.spinner("Thinking..."):
             faiss_index = st.session_state.faiss_index
 
+            # --- MODEL UPDATED ---
             # Use a fast and capable model from Groq
             # gemma2-9b-it was decommissioned, using recommended replacement
             llm = ChatGroq(api_key=GROQ_API_KEY, model_name="llama-3.1-8b-instant")
@@ -163,7 +164,7 @@ if prompt:
             start_time = time.perf_counter()
 
             # Search for relevant documents
-            top_docs = faiss_index.similarity_search(prompt, k=4)  # Increased k for better context
+            top_docs = faiss_index.similarity_search(prompt, k=4) # Increased k for better context
 
             chain = load_qa_chain(llm=llm, chain_type="stuff")
             answer = chain.run(input_documents=top_docs, question=prompt)
@@ -174,7 +175,7 @@ if prompt:
             # --- END TIMER ---
 
             st.markdown(answer)
-
+            
             # --- DISPLAY TIME TAKEN ---
             st.caption(f"Time taken to answer: {duration:.2f} seconds")
             # --- END DISPLAY ---
@@ -194,4 +195,3 @@ if prompt:
 
             assistant_message = {"role": "assistant", "content": answer, "sources": sources_for_display}
             st.session_state.messages.append(assistant_message)
-
