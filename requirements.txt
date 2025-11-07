@@ -10,3 +10,5 @@ sentence-transformers
 faiss-cpu
 unstructured
 requests-html
+python-3.11
+
