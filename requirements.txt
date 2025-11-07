@@ -1,9 +1,11 @@
 streamlit
 python-dotenv
 PyMuPDF
-langchain
-langchain-community
-langchain-groq
+langchain==0.2.1
+langchain-core==0.2.1
+langchain-community==0.2.1
+langchain-groq==0.1.5
+langchain-textsplitters==0.2.1
 sentence-transformers
 faiss-cpu
 unstructured
